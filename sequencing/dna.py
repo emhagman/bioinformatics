@@ -10,7 +10,7 @@ class DNA:
     @staticmethod
     def mrna(dna):
         if 'string' in type(dna):
-            dna = dna.lower().replace('a', 'u')
+            dna = dna.lower().replace('t', 'u')
             return DNA.string_to_list(dna)
         else:
             dna = DNA.string_to_list(dna)
@@ -37,7 +37,7 @@ class DNA:
     @staticmethod
     def mrna_map(marker):
         marker = marker.lower()
-        if 'a' in marker:
+        if 't' in marker:
             return 'u'
         else:
             return marker
