@@ -10,7 +10,7 @@ class DNA:
     @staticmethod
     def rna(dna):
         if isinstance(dna, str):
-            dna = dna.lower().replace('t', 'u')
+            dna = dna.upper().replace('T', 'U')
             return DNA.string_to_list(dna)
         else:
             dna = DNA.string_to_list(dna)
@@ -24,20 +24,20 @@ class DNA:
 
     @staticmethod
     def complement_map(marker):
-        marker = marker.lower()
-        if 't' in marker:
-            return 'a'
-        elif 'a' in marker:
-            return 't'
-        elif 'c' in marker:
-            return 'g'
-        elif 'g' in marker:
-            return 'c'
+        marker = marker.upper()
+        if 'T' in marker:
+            return 'A'
+        elif 'A' in marker:
+            return 'T'
+        elif 'C' in marker:
+            return 'G'
+        elif 'G' in marker:
+            return 'C'
 
     @staticmethod
     def rna_map(marker):
-        marker = marker.lower()
-        if 't' in marker:
-            return 'u'
+        marker = marker.upper()
+        if 'T' in marker:
+            return 'U'
         else:
             return marker
