@@ -14,7 +14,7 @@ class DNA:
             return DNA.string_to_list(dna)
         else:
             dna = DNA.string_to_list(dna)
-            return map(DNA.mrna_map, dna)
+            return map(DNA.rna_map, dna)
 
     @staticmethod
     def complement(seq):
@@ -35,7 +35,7 @@ class DNA:
             return 'c'
 
     @staticmethod
-    def mrna_map(marker):
+    def rna_map(marker):
         marker = marker.lower()
         if 't' in marker:
             return 'u'
