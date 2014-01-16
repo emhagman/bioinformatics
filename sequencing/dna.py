@@ -8,8 +8,8 @@ class DNA:
         return [s for s in seq]
 
     @staticmethod
-    def mrna(dna):
-        if 'string' in type(dna):
+    def rna(dna):
+        if isinstance(dna, str):
             dna = dna.lower().replace('t', 'u')
             return DNA.string_to_list(dna)
         else:
@@ -18,7 +18,7 @@ class DNA:
 
     @staticmethod
     def complement(seq):
-        if 'string' in type(seq):
+        if isinstance(seq, str):
             seq = DNA.string_to_list(seq)
         return map(DNA.complement_map, seq)
 
