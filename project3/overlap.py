@@ -4,17 +4,17 @@ import random
 from prettytable import PrettyTable
 
 
-def generate_shit_for_shit(coverage_a, start, end):
+def determine_indiv_coverage(coverage_a, start, end):
     for i in range(start, end):
         coverage_a[i] += 1
     return coverage_a
 
 
-def generate_fragments(strand, mini=2, maxi=4, coverage=10):
+def generate_fragments(strand, mini=9, maxi=12, coverage=5):
     fragments = []
     rough_length = coverage * len(strand)
     actual_length = 0
-    point_of_no_return = len(strand) - maxi
+    point_of_no_return = len(strand) - mini - 1
     if point_of_no_return <= 0:
         raise Exception('strand is too short for maximum range')
     if mini > maxi or maxi < mini:
@@ -22,18 +22,22 @@ def generate_fragments(strand, mini=2, maxi=4, coverage=10):
     while actual_length < rough_length:
         start_pos = random.randint(0, point_of_no_return)
         fragment_len = random.randint(mini, maxi)
-        fragment = strand[start_pos:start_pos+fragment_len]
-        actual_length += fragment_len
-        fragments.append((fragment, start_pos, start_pos+fragment_len))
+        if start_pos+fragment_len >= len(strand):
+            fragment = strand[start_pos:]
+            actual_length += len(strand) - start_pos
+        else:
+            fragment = strand[start_pos:start_pos+fragment_len]
+            actual_length += fragment_len
+        fragments.append((fragment, start_pos, fragment_len))
 
     # calc coverage
     coverage_arr = [0 for i in range(0, len(strand))]
     for fragment in fragments:
-        coverage_arr = generate_shit_for_shit(coverage_arr, fragment[1], fragment[2])
+        coverage_arr = determine_indiv_coverage(coverage_arr, fragment[1], fragment[2])
     return fragments, actual_length, rough_length, coverage_arr
 
 # test out some fragments
-frags, actual, rough, coverage = generate_fragments("ATGCATATGCATATGCATATGCAT", coverage=3)
+frags, actual, rough, coverage = generate_fragments("ATGCATATGCATATGCATATGCAT")
 tab2 = PrettyTable(['Fragment', 'Fragment Start Position', 'Fragment Length'])
 for frag in frags:
     tab2.add_row([frag[0], frag[1], frag[2]])
@@ -62,5 +66,5 @@ def overlap(fragments):
                     overlapped = k
                     tab.add_row([frag1, frag2, contig, overlapped])
                 k -= 1
-overlap([f[0] for f in frags])
+overlap(['TACCTTG', 'TTGAT', 'GATATGG', 'GGAG', 'CTCTA', 'CTAGT', 'GCTCT'])
 print(tab)
